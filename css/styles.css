@@ -113,12 +113,15 @@ header h1 {
     color: rgba(50, 50, 50, 0.7);
     margin: 7px auto;
     transition: .4s ease-out;
+    font-family: 'Roboto Slab', serif;
 }
 
 .cap {
     text-transform: capitalize;
 }
-
+#name{
+    color: rgba(179, 83, 31, 0.7)
+}
 
 /* ===================================== 
    Modal
@@ -171,6 +174,7 @@ header h1 {
 .modal-text {
     color: rgba(50, 50, 50, 0.7);
     margin: 10px;
+    font-family: 'Roboto Slab', serif;
 }
 
 .modal hr {
