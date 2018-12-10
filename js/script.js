@@ -13,13 +13,16 @@ let maxEmployees= 12;
 //----------------------function declarations-------------------------- 
 
 function appendEmpModel(dataPart){
-body.innerHTML += dataPart
+body.innerHTML += dataPart;
 document.querySelector('#modal-close-btn').onclick = function (){
-document.querySelector('div[class = "modal-container"]').style.display = 'none';
+let div = document.querySelector('div[class = "modal-container"]');
+div.remove(div);
+}
+appendClickEvent();
+}
 
-}
-  appendClickEvent();
-}
+
+
 //add the click events to the cards.
 function appendClickEvent(){
     let empCards = [...document.querySelectorAll('.card')];
@@ -27,10 +30,13 @@ function appendClickEvent(){
             for(let i=0; i<empCards.length; i++) {
                 console.log(i);
                 empCards[i].onclick = function(){
-                
+             
                 appendEmpModel(empModel[i]);
+                 
             };//end click handler
+         
          }//end forEach empCard
+ 
         }
 
 
