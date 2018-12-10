@@ -1,6 +1,6 @@
 //XML requests
 let xhr = new XMLHttpRequest();
-const url = 'https://randomuser.me/api/?format=json';
+const url = 'https://randomuser.me/api/?format=json&nat=US';
 
 //let declarations
 let empCardMarkup = [];
@@ -30,7 +30,8 @@ function appendClickEvent(){
             for(let i=0; i<empCards.length; i++) {
                 console.log(i);
                 empCards[i].onclick = function(){
-             
+                console.log(empModel[i]);
+                
                 appendEmpModel(empModel[i]);
                  
             };//end click handler
@@ -57,9 +58,9 @@ function createEmpModel(data){
             <p class="modal-text">${data.results[0].email}</p>
             <p class="modal-text cap">${data.results[0].location.city}</p>
             <hr>
-            <p class="modal-text">(555) 555-5555</p>
-            <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
-            <p class="modal-text">Birthday: 10/21/2015</p>
+            <p class="modal-text">${data.results[0].cell}</p>
+            <p class="modal-text">${(data.results[0].location.street).toUpperCase()}, ${(data.results[0].location.city).toUpperCase()}, ${(data.results[0].location.state).toUpperCase()} ${data.results[0].location.postcode}</p>
+            <p class="modal-text">Birthday: ${(data.results[0].dob.date).slice(0,10)}</p>
         </div>
     </div>
     `
