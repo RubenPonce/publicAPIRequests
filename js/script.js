@@ -1,38 +1,46 @@
-
+//XML requests
 let xhr = new XMLHttpRequest();
 const url = 'https://randomuser.me/api/?format=json';
+
+//let declarations
+let empCardMarkup = [];
+let empModel = [];
 let gallery = document.querySelector('#gallery');
-let userIndex = 0;
-gallery.innerHTML += ('<p id = "d-message">Displaying 12 employees...');
+let body = document.querySelector('body');
+let employeeIndex = 0;
+let maxEmployees= 12;
 
+//----function declarations 
+function appendEmpModel(dataPart){
+body.innerHTML += dataPart
+}
 
-while(userIndex<12){
-
-    fetch(url)
-        .then(response => {
-            console.log(response);      
-            return response.text();
-    })
-        .then(data => {
-            userData = JSON.parse(data);
-            console.log(userData);
-            let markup = createData(userData);
-            appendData(markup);
-    });
-    userIndex++;
-    if(userIndex ===12){
-        document.querySelector('#d-message').innerHTML = 'Displaying 12 employees';
-    }
+function appendEmpCards(dataPart){
+    gallery.innerHTML += dataPart;
+   // dataPiece.addEventListener("click", => displayEmpModel(dataPiece))
 }
 
 
-function appendData(child){
-    gallery.innerHTML += child;
-console.log(gallery);   
+function createEmpModel(data){
+    return `
+    <div class="modal-container">
+    <div class="modal">
+        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+        <div class="modal-info-container">
+            <img class="modal-img" src=${data.results[0].picture.large} alt="profile picture">
+            <h3 id="name" class="modal-name cap">${data.results[0].name.first} ${data.results[0].name.last}</h3>
+            <p class="modal-text">${data.results[0].email}</p>
+            <p class="modal-text cap">${data.results[0].location.city}</p>
+            <hr>
+            <p class="modal-text">(555) 555-5555</p>
+            <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+            <p class="modal-text">Birthday: 10/21/2015</p>
+        </div>
+    </div>
+    `
 }
 
-function createData(data){
-    console.log(data.results[0].picture.large);
+function createEmpData(data){
     return ` <div class="card"> <div class="card-img-container">   <img class="card-img" src=${data.results[0].picture.large} alt="profile picture">
                         </div>
                         <div class="card-info-container">
@@ -43,11 +51,61 @@ function createData(data){
                     </div>
     `
 }
+//----end function declarations
+while(employeeIndex<12){
+    //gathers employee data 12 times
+    fetch(url)
+        .then(response => {    
+            return response.text();
+    })
+        .then(data => {
+            employeeData = JSON.parse(data);//push all the JSON data into the 'empCardMarkup' array.
+           empCardMarkup.push(createEmpData(employeeData));
+            empModel.push(createEmpModel(employeeData));
 
+            
+            if(empCardMarkup.length ===maxEmployees){//if employees finish loading, display them all and replace loading message.
+                        empCardMarkup.forEach(dataPiece => {
+                            appendEmpCards(dataPiece);
+                                });
+                              appendClickEvent();
+                }
+                document.querySelector("#employee-load").style.display = "none";
+                
+            
+        
+            }
+              
+    );
+    employeeIndex++;
+    }
 
-//xhr.load() = function(){ if(this.status == 200)...}
-    //have it load, and then check for the status. 
-     //jSON.parse to put into a variable
-//xhr.send() to send the request
+    
+    function appendClickEvent(){
+const empCards = [...document.querySelectorAll('.card')];
+console.log(empCards[0]);
+        for(let i=0; i<empCards.length+1; i++) {
+            empCards[i].addEventListener('click', function(){
+            console.log(i);
+            appendEmpModel(empModel[i]);
+        });//end click handler
+     }//end forEach empCard
+    }
 
+   /* 
+   <div class="modal-container">
+    <div class="modal">
+        <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
+        <div class="modal-info-container">
+            <img class="modal-img" src="https://placehold.it/125x125" alt="profile picture">
+            <h3 id="name" class="modal-name cap">name</h3>
+            <p class="modal-text">email</p>
+            <p class="modal-text cap">city</p>
+            <hr>
+            <p class="modal-text">(555) 555-5555</p>
+            <p class="modal-text">123 Portland Ave., Portland, OR 97204</p>
+            <p class="modal-text">Birthday: 10/21/2015</p>
+        </div>
+    </div>
+*/
 
