@@ -16,7 +16,6 @@ let maxEmployees = 12;
 let searchBar = document.querySelector('div[class="search-container"]');
 createSearchBar();
 let searchInput = document.querySelector('#search-input');
-
 const nameRegex = new RegExp(/^[A-Za-z]{0,30}$/);
 //----------end variable declarations----------
 
@@ -57,7 +56,7 @@ function addClick(index, data, notEqual, div, location) {
 function appendEmpModal(dataPart, index) {
     createAndAppendItems(dataPart[index]);
     let div = document.querySelector('div[class = "modal-container"]');
-    document.onkeydown = event => {
+    body.onkeydown = event => {
         let keyName = event.key;
         listenForKey(keyName, dataPart, index + 1, "ArrowRight", div, 12);
         listenForKey(keyName, dataPart, index - 1, "ArrowLeft", div, -1);
@@ -71,6 +70,11 @@ function appendEmpModal(dataPart, index) {
     //Modal 'X' button event
     document.querySelector('#modal-close-btn').onclick = function () {
         div.remove(div);
+        body.onkeydown = function (event) {
+            if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                event.preventDefault()
+            };
+        }
     }
 }
 
@@ -84,7 +88,6 @@ function checkNameMatch(name, value) {
     }
 
 }
-
 
 //add the click events to the cards.
 function appendClickEvent() {
@@ -194,7 +197,7 @@ fetch(url)
                         nameCollection[i].parentElement.parentElement.style.display = "none";
                     } else {
                         nameCollection[i].parentElement.parentElement.style.display = "flex";
-                    } 
+                    }
                 }//end for loop
             }//end keyUp
         }
