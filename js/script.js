@@ -11,20 +11,53 @@ let employeeIndex = 0;
 
 let maxEmployees= 12;
 let searchBar = document.querySelector('div[class="search-container"]');
-createSearchBar();
-let searchInput = document.querySelector('#search-input');
+// createSearchBar();
+// let searchInput = document.querySelector('#search-input');
 
 const nameRegex = new RegExp(/^[A-Za-z]{0,30}$/);
 
 //----------------------function declarations-------------------------- 
 
+function nextButtonEvents(parameter){
+    let next = document.querySelector('#modal-next');
+    next.onclick =  function(){
+        let div = document.querySelector('div[class = "modal-container"]');
+        div.remove(div);
+        appendClickEvent();
+        appendEmpModel(parameter);
+        
+        
+    }//end click handler
+    
+    }
+    function prevButtonEvents(parameter){
+        let prev = document.querySelector('#modal-prev');
+        prev.onclick = ('click', function(){
+            let div = document.querySelector('div[class = "modal-container"]');
+            div.remove(div);
+            appendClickEvent();
+            appendEmpModel(parameter);
+            // prevButtonEvents(parameter);
+       })//end click handler
+    }
+// function createButtons(){
+//     return  `<div class="modal-btn-container">
+//     <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+//     <button type="button" id="modal-next" class="modal-next btn">Next</button>
+// </div>`
+// }
 function appendEmpModel(dataPart){
+
 body.innerHTML += dataPart;
+appendClickEvent();
 document.querySelector('#modal-close-btn').onclick = function (){
 let div = document.querySelector('div[class = "modal-container"]');
 div.remove(div);
 }
+
+
 appendClickEvent();
+
 }
 
 function checkNameMatch(name,value) {
@@ -43,11 +76,16 @@ function appendClickEvent(){
     let empCards = [...document.querySelectorAll('.card')];
     
             for(let i=0; i<empCards.length; i++) {
-                console.log(i);
+
                 empCards[i].onclick = function(){
-                console.log(empModel[i]);
                 
                 appendEmpModel(empModel[i]);
+                if(i!==0){
+                    prevButtonEvents(empModel[i-1]);          
+                }
+                if(i!==11){
+                    nextButtonEvents(empModel[i+1]);
+                }
                  
             };//end click handler
          
@@ -70,6 +108,7 @@ function createSearchBar(){
 
 function createEmpModel(data){
     return `
+    
     <div class="modal-container">
     <div class="modal">
         <button type="button" id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
@@ -84,6 +123,12 @@ function createEmpModel(data){
             <p class="modal-text">Birthday: ${(data.dob.date).slice(0,10)}</p>
         </div>
     </div>
+    <div class="modal-btn-container">
+    <button type="button" id="modal-prev" class="modal-prev btn">Prev</button>
+    <button type="button" id="modal-next" class="modal-next btn">Next</button>
+</div>
+</div>
+    
     `
 }
 
@@ -137,12 +182,11 @@ function createEmpData(data){
                                     } else{
                                         nameCollection[i].parentElement.parentElement.style.display = "flex";
                                     }
-                                //end foreach NameText
-                                   
-                                   
-                                   
+                                //end foreach NameText 
                                }
-                                console.log(searchInput.value);
+                             
+                               
+                                
                             }//end keyUp
                 }
                //add search bar functionality here
