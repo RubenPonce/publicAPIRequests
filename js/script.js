@@ -193,7 +193,6 @@ fetch(url)
                 let nameText = nameCollection.map(names => names.textContent);
                 for (let i = 0; i < nameText.length; i++) {
                     if (!checkNameMatch(nameText[i], searchInput.value)) {
-                        console.log(nameText[i]);
                         nameCollection[i].parentElement.parentElement.style.display = "none";
                     } else {
                         nameCollection[i].parentElement.parentElement.style.display = "flex";
