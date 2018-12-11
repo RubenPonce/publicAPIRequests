@@ -48,6 +48,20 @@ document.querySelector('#modal-next').onclick = function(){
             appendEmpModel(dataPart,index+1);
         }
     }//end click handler
+    //keyup handler 
+    document.onkeyup = event => {
+        let keyName = event.key;
+        if(keyName === "ArrowRight"&&index!=11){
+            div.remove(div);
+            appendEmpModel(dataPart, index+1);
+            
+        }
+        if(keyName === "ArrowLeft"&&index!=0){
+            div.remove(div);
+            appendEmpModel(dataPart, index-1);
+            
+        }
+      };
 
     document.querySelector('#modal-prev').onclick = function(){
         
@@ -153,9 +167,8 @@ function createEmpData(data){
     })
         .then(data => {
             //push all the JSON data into the 'empCardMarkup' array.
-           console.log(JSON.parse(data));
+           
            let employeeData = JSON.parse(data);
-           console.log(employeeData.results);
             employeeData.results.forEach(result =>{
                 console.log(result);
                
