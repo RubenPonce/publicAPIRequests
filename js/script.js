@@ -11,23 +11,15 @@ let employeeIndex = 0;
 
 let maxEmployees= 12;
 let searchBar = document.querySelector('div[class="search-container"]');
-// createSearchBar();
-// let searchInput = document.querySelector('#search-input');
+createSearchBar();
+let searchInput = document.querySelector('#search-input');
 
 const nameRegex = new RegExp(/^[A-Za-z]{0,30}$/);
 
 //----------------------function declarations-------------------------- 
 
-function nextButtonEvents(parameter){
-    let next = document.querySelector('#modal-next');
-    next.onclick =  function(){
-        let div = document.querySelector('div[class = "modal-container"]');
-        div.remove(div);
-        appendClickEvent();
-        appendEmpModel(parameter);
-        
-        
-    }//end click handler
+function nextButtonEvents(){
+    
     
     }
     function prevButtonEvents(parameter){
@@ -46,16 +38,26 @@ function nextButtonEvents(parameter){
 //     <button type="button" id="modal-next" class="modal-next btn">Next</button>
 // </div>`
 // }
-function appendEmpModel(dataPart){
-
-body.innerHTML += dataPart;
-appendClickEvent();
-document.querySelector('#modal-close-btn').onclick = function (){
+function appendEmpModel(dataPart,index){
+console.log(dataPart);
+body.innerHTML += dataPart[index];
 let div = document.querySelector('div[class = "modal-container"]');
+document.querySelector('#modal-next').onclick = function(){
+    div.remove(div);
+       appendEmpModel(dataPart,index+1);
+       
+    }//end click handler
+
+    document.querySelector('#modal-prev').onclick = function(){
+        div.remove(div);
+           appendEmpModel(dataPart,index-1);
+            
+        }//end click handler
+        
+document.querySelector('#modal-close-btn').onclick = function (){
+
 div.remove(div);
 }
-
-
 appendClickEvent();
 
 }
@@ -79,13 +81,7 @@ function appendClickEvent(){
 
                 empCards[i].onclick = function(){
                 
-                appendEmpModel(empModel[i]);
-                if(i!==0){
-                    prevButtonEvents(empModel[i-1]);          
-                }
-                if(i!==11){
-                    nextButtonEvents(empModel[i+1]);
-                }
+                appendEmpModel(empModel,i);
                  
             };//end click handler
          
@@ -184,12 +180,11 @@ function createEmpData(data){
                                     }
                                 //end foreach NameText 
                                }
-                             
-                               
-                                
+                                      
                             }//end keyUp
+                            
                 }
-               //add search bar functionality here
+             
                
             }
 
