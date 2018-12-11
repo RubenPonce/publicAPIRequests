@@ -97,7 +97,7 @@ header h1 {
 .card-img {
     width: 95px;
     margin: 10px 15px auto 10px;
-    border-radius: 50%;
+    border-radius: 0.25em;
 }
 
 .card-info-container {
@@ -145,7 +145,7 @@ header h1 {
     padding-bottom: 15px;
     background: rgba(255, 255, 255, 1);
     border-radius: 0.25em;
-    border: 1px solid rgba(100, 100, 100, 0.3);
+    border: 1px solid rgba(2, 2, 2, 0.3);
     transition: .4s ease-out;
 }
 
@@ -164,7 +164,7 @@ header h1 {
 .modal-img {
     width: 150px;
     margin-top: 35px;
-    border-radius: 50%;
+    border-radius: 0.25em;
 }
 
 .modal-name {

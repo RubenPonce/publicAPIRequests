@@ -17,6 +17,12 @@ let searchInput = document.querySelector('#search-input');
 const nameRegex = new RegExp(/^[A-Za-z]{0,30}$/);
 
 //----------------------function declarations-------------------------- 
+function createAndAppendItems(createFunction){
+
+    let createDiv = document.createElement('div');
+    createDiv.innerHTML = createFunction;
+    body.appendChild(createDiv);
+}
 
 function nextButtonEvents(){
     
@@ -39,38 +45,37 @@ function nextButtonEvents(){
 // </div>`
 // }
 function appendEmpModel(dataPart,index){
+
 console.log(dataPart);
-body.innerHTML += dataPart[index];
+createAndAppendItems(dataPart[index]);
+
 let div = document.querySelector('div[class = "modal-container"]');
+document.onkeydown = event => {
+    let keyName = event.key;
+    if(keyName === "ArrowRight"&&index!=11){
+        div.remove(div);
+        appendEmpModel(dataPart, index+1);
+        
+    }
+    if(keyName === "ArrowLeft"&&index!=0){
+        div.remove(div);
+        appendEmpModel(dataPart, index-1);
+        
+    }
+  };//end keydown
+
 document.querySelector('#modal-next').onclick = function(){
         if(index!=11){
             div.remove(div);
             appendEmpModel(dataPart,index+1);
         }
     }//end click handler
-    //keyup handler 
-    document.onkeyup = event => {
-        let keyName = event.key;
-        if(keyName === "ArrowRight"&&index!=11){
-            div.remove(div);
-            appendEmpModel(dataPart, index+1);
-            
-        }
-        if(keyName === "ArrowLeft"&&index!=0){
-            div.remove(div);
-            appendEmpModel(dataPart, index-1);
-            
-        }
-      };
-
-    document.querySelector('#modal-prev').onclick = function(){
-        
+    document.querySelector('#modal-prev').onclick = function(){   
         if(index!=0){
             div.remove(div);
            appendEmpModel(dataPart,index-1);
         }
-        }//end click handler
-        
+        }//end click handler      
 document.querySelector('#modal-close-btn').onclick = function (){
 
 div.remove(div);
@@ -184,10 +189,12 @@ function createEmpData(data){
                               document.querySelector("#employee-load").style.display = "none";
                               
                               let nameCollection = [...document.querySelectorAll('#name')];
-                             searchInput.focus();
-                              searchInput.onkeyup = function(e){
-                                  e.preventDefault();
-                               const nameText = nameCollection.map(names => names.textContent);
+                              searchInput.focus();
+                             document.querySelector('#search-submit').onsubmit = function(e){
+                                e.target.disabled = "true";
+                            }
+                              searchInput.onkeyup = function(){
+                               let nameText = nameCollection.map(names => names.textContent);
                                for (let i = 0; i < nameText.length; i++) {
                                     if( !checkNameMatch(nameText[i],searchInput.value) ) {
                                         console.log(nameText[i]);
@@ -195,11 +202,12 @@ function createEmpData(data){
                                     } else{
                                         nameCollection[i].parentElement.parentElement.style.display = "flex";
                                     }
+                                    
                                 //end foreach NameText 
                                }
+                            
                                       
                             }//end keyUp
-                            
                 }
              
                
