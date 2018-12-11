@@ -43,15 +43,18 @@ console.log(dataPart);
 body.innerHTML += dataPart[index];
 let div = document.querySelector('div[class = "modal-container"]');
 document.querySelector('#modal-next').onclick = function(){
-    div.remove(div);
-       appendEmpModel(dataPart,index+1);
-       
+        if(index!=11){
+            div.remove(div);
+            appendEmpModel(dataPart,index+1);
+        }
     }//end click handler
 
     document.querySelector('#modal-prev').onclick = function(){
-        div.remove(div);
+        
+        if(index!=0){
+            div.remove(div);
            appendEmpModel(dataPart,index-1);
-            
+        }
         }//end click handler
         
 document.querySelector('#modal-close-btn').onclick = function (){
