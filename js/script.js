@@ -185,7 +185,8 @@ function createEmpData(data){
                               
                               let nameCollection = [...document.querySelectorAll('#name')];
                              searchInput.focus();
-                              searchInput.onkeyup = function(){
+                              searchInput.onkeyup = function(e){
+                                  e.preventDefault();
                                const nameText = nameCollection.map(names => names.textContent);
                                for (let i = 0; i < nameText.length; i++) {
                                     if( !checkNameMatch(nameText[i],searchInput.value) ) {
