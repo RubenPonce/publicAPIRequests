@@ -184,8 +184,8 @@ fetch(url)
             document.querySelector("#employee-load").style.display = "none";
             let nameCollection = [...document.querySelectorAll('#name')];
             //functionality for appended search bar
-            let searchSubmit = document.querySelector('#search-submit');
-            searchInput.onsubmit = function (e) {
+            const searchSubmit = document.querySelector('#search-submit').parentElement;
+            searchSubmit.onsubmit = function (e) {
                 e.preventDefault();
             }
             searchInput.focus();
